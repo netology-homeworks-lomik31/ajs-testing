@@ -70,3 +70,7 @@ document.querySelectorAll(".payment-form").forEach((form) => {
         );
     });
 });
+
+// TODO:
+// 1. поменять сборку чтобы public тоже включался в dist
+// 2. сделать e2e тесты
