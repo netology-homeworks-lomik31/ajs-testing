@@ -2,6 +2,17 @@ const paymentSystems = ["visa", "mastercard", "amex", "mir", "jcb"];
 // const iconsPath = "img/";
 const variants = ["", "outline"];
 
+function importAll(r) {
+    let images = {};
+    r.keys().map((item, index) => {
+        images[item.replace("./", "")] = r(item);
+    });
+    return images;
+}
+const images = importAll(
+    require.context("../img", false, /\.(png|jpe?g|svg)$/),
+);
+
 function validateCardNumber(cardNumber) {
     cardNumber = cardNumber.replaceAll(/[- ]/g, "");
     if (!/^\d{13,19}$/.test(cardNumber)) return false;
@@ -46,7 +57,8 @@ function drawPaymentSystemIcon(container, paymentSystem) {
         if (paymentSystem == system || !paymentSystems.includes(paymentSystem))
             variant = variants[0];
         else variant = deselectedVariant;
-        icon.src = `./img/${system}${variant === "" ? variant : "-" + variant}.svg`;
+        icon.src =
+            images[`${system}${variant === "" ? variant : "-" + variant}.svg`];
         icon.className = "payment-icon";
         icon.alt = system;
         container.appendChild(icon);
